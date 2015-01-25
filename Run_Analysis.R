@@ -23,16 +23,16 @@ features     <- read.table("./dataset/features.txt")
 head(features) # as you can see 1st column is pointless, thus, subsetting and removing right away it is very viable and smart approach
 features     <- features[,2]
 
-meanSD       <- grep("mean\\(\\)|std\\(\\)", features[,2]) # this creates a vector of numbers showing where the mean/std is (which row) that will be used to subset 
+meanSD       <- grep("mean\\(\\)|std\\(\\)", features) # this creates a vector of numbers showing where the mean/std is (which row) that will be used to subset 
 
 joinX        <- joinX[, meanSD] # here we go subsetting the only mean/std measurements and we only got 66 columns now
 
-names(joinX) <- features[meanSD, 2]# this is necessary cause without it the columns are named just V1, V2, V32, etc...
+names(joinX) <- features[meanSD]# this is necessary cause without it the columns are named just V1, V2, V32, etc...
 names(joinX) <- gsub("\\(\\)", "", names(joinX)) # removes "()"
 names(joinX) <- gsub("-", "", names(joinX))# removes "-"
 names(joinX) <- tolower(names(joinX))
 names(joinX) <- gsub("mean","Mean", names(joinX));names(joinX)  <- gsub("std","Std", names(joinX)) # mean to Mean, std to Std
-
+# I would not usually recommend putting capital letters into variable names, however, as these v. names are quite long and hard to read I found it useful
 
 activity     <- read.table("./dataset/activity_labels.txt")
 activity     <- activity[,2]
